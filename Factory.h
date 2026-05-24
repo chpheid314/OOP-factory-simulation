@@ -6,6 +6,8 @@
 #include "Machine.h"
 #include "CakeType.h"
 #include "SimulationSettings.h"
+#include "ProductionLine.h"
+#include "ScenarioManager.h"
 
 class Factory {
 public:
@@ -36,8 +38,10 @@ public:
 
     SimulationSettings& getSettings();
 
+    ProductionLine& getProductionLine();
+
 private:
-    std::vector<std::unique_ptr<Machine>> machines;
+    ProductionLine line;
 
     int tick;
 
@@ -52,4 +56,6 @@ private:
     int breakdownCount;
 
     SimulationSettings settings;
+
+    ScenarioManager scenarioManager;
 };

@@ -6,6 +6,7 @@ Machine::Machine(const std::string& name,
                  float breakChance)
     : name(name),
       processTime(processTime),
+      defaultProcessTime(processTime),
       breakChance(breakChance)
 {
     state = MachineState::IDLE;
@@ -219,4 +220,21 @@ Product Machine::popOutputProduct() {
     hasFinishedProduct = false;
 
     return finishedProduct;
+}
+
+void Machine::setProcessingTime(
+    int time
+)
+{
+    processTime = time;
+}
+
+void Machine::resetProcessingTime()
+{
+    processTime = defaultProcessTime;
+}
+
+void Machine::breakMachine()
+{
+    forceBreak();
 }

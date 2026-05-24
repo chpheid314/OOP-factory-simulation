@@ -5,6 +5,9 @@
 #include "SheetMachine.h"
 #include "CreamMachine.h"
 #include "ToppingMachine.h"
+#include "RandomBreakScenario.h"
+#include "BottleneckScenario.h"
+#include "OverflowScenario.h"
 
 Factory::Factory() {
 
@@ -20,9 +23,17 @@ Factory::Factory() {
     lostCount = 0;
     breakdownCount = 0;
 
-    machines.push_back(std::make_unique<SheetMachine>());
-    machines.push_back(std::make_unique<CreamMachine>());
-    machines.push_back(std::make_unique<ToppingMachine>());
+    scenarioManager.addScenario(
+    std::make_unique<RandomBreakScenario>()
+    );
+
+    scenarioManager.addScenario(
+    std::make_unique<BottleneckScenario>()
+    );
+
+    scenarioManager.addScenario(
+    std::make_unique<OverflowScenario>()
+    );
 }
 
 void Factory::update() {
@@ -37,28 +48,19 @@ void Factory::update() {
         spawnProduct();
     }
 
-    for (auto& machine : machines) {
+    scenarioManager.apply(
+        line
+    );
 
-        machine->update(tick, settings);
-    }
+    line.update(
+        tick,
+        settings
+    );
 
-    if (machines[0]->hasOutputProduct()) {
-
-        Product p = machines[0]->popOutputProduct();
-
-        machines[1]->pushProduct(p);
-    }
-
-    if (machines[1]->hasOutputProduct()) {
-
-        Product p = machines[1]->popOutputProduct();
-
-        machines[2]->pushProduct(p);
-    }
-
-    if (machines[2]->hasOutputProduct()) {
-
-        Product p = machines[2]->popOutputProduct();
+    if(line.hasFinishedProduct())
+    {
+        Product p=
+            line.popFinishedProduct();
 
         finishedCount++;
 
@@ -73,17 +75,17 @@ void Factory::update() {
 
 void Factory::reset() {
 
-    machines.clear();
-
-    machines.push_back(std::make_unique<SheetMachine>());
-    machines.push_back(std::make_unique<CreamMachine>());
-    machines.push_back(std::make_unique<ToppingMachine>());
+    line.reset();
 
     tick = 0;
 
     finishedCount = 0;
     lostCount = 0;
     breakdownCount = 0;
+
+    scenarioManager.reset(
+        line
+    );
 }
 
 void Factory::start() {
@@ -105,7 +107,7 @@ void Factory::spawnProduct() {
 
     Product p(nextProductId++, currentRecipe);
 
-    machines[0]->pushProduct(p);
+    line.pushProduct(p);
 }
 
 void Factory::setRecipe(CakeType type) {
@@ -140,10 +142,15 @@ int Factory::getBreakdownCount() const {
 
 std::vector<std::unique_ptr<Machine>>& Factory::getMachines() {
 
-    return machines;
+    return line.getMachines();
 }
 
 SimulationSettings& Factory::getSettings() {
 
     return settings;
+}
+
+ProductionLine& Factory::getProductionLine()
+{
+    return line;
 }

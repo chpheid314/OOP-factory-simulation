@@ -35,8 +35,6 @@ public:
     float getHealth() const;
     float getProgress() const;
 
-    bool isBroken() const;
-
     void pushProduct(const Product& product);
 
     void forceBreak();
@@ -45,6 +43,16 @@ public:
     bool hasOutputProduct() const;
 
     Product popOutputProduct();
+
+    virtual void setProcessingTime(
+        int time
+    );
+
+    virtual void resetProcessingTime();
+
+    virtual void breakMachine();
+
+    virtual bool isBroken() const;
 
 protected:
     std::string name;
@@ -55,8 +63,6 @@ protected:
 
     int processTime;
     int progress;
-
-    bool broken;
 
     int repairTimer;
 
@@ -69,4 +75,8 @@ protected:
     int outputCount;
 
     float breakChance;
+
+    int defaultProcessTime;
+
+    bool broken=false;
 };
