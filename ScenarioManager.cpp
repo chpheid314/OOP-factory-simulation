@@ -1,4 +1,5 @@
 #include "ScenarioManager.h"
+#include "ProductionLine.h"
 
 void ScenarioManager::addScenario(
     std::unique_ptr<Scenario> scenario
@@ -15,7 +16,10 @@ void ScenarioManager::apply(
 {
     for(auto& scenario : scenarios)
     {
-        scenario->apply(line);
+        if(scenario->isEnabled())
+        {
+            scenario->apply(line);
+        }
     }
 }
 

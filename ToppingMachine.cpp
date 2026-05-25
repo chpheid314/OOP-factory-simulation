@@ -1,26 +1,40 @@
 #include "ToppingMachine.h"
 
 ToppingMachine::ToppingMachine()
-    : Machine("Topping Machine", 5, 0.05f)
+    : Machine("Topping Machine", 5)
 {
 }
 
 void ToppingMachine::process(Product& product) {
 
-    product.addQuality(15);
+    switch(product.getCakeType())
+    {
+    case CakeType::CHOCOLATE:
 
-    if (product.getCakeType() == CakeType::CHOCOLATE) {
+        product.addQuality(15);
 
-        if (rand() % 10 == 0) {
-
+        if(rand()%10==0)
             product.burn();
-        }
+
+        break;
+
+    case CakeType::STRAWBERRY:
+
+        product.addQuality(20);
+
+        break;
+
+    case CakeType::MATCHA:
+
+        product.addQuality(10);
+
+        break;
     }
 
     product.complete();
 }
 
-std::string ToppingMachine::getName() const {
-
+std::string ToppingMachine::getDescription() const
+{
     return "Adds toppings";
 }

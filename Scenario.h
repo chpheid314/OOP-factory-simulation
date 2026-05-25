@@ -15,4 +15,14 @@ public:
     virtual void reset(
         ProductionLine& line
     )=0;
+
+    void setEnabled(
+        bool value
+    );
+
+    bool isEnabled() const;
+
+protected:
+
+    bool enabled=false;
 };

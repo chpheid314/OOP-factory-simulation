@@ -1,15 +1,17 @@
-#include "Machine.h"
 #include <sstream>
+#include "Machine.h"
+#include "IdleState.h"
+#include "WorkingState.h"
+#include "BrokenState.h"
 
 Machine::Machine(const std::string& name,
-                 int processTime,
-                 float breakChance)
+                 int processTime)
     : name(name),
       processTime(processTime),
-      defaultProcessTime(processTime),
-      breakChance(breakChance)
+      defaultProcessTime(processTime)
 {
-    state = MachineState::IDLE;
+
+    machineState = std::make_unique<IdleState>();
 
     health = 100.0f;
 
@@ -24,74 +26,16 @@ Machine::Machine(const std::string& name,
     hasFinishedProduct = false;
 }
 
-void Machine::update(int tick, const SimulationSettings& settings) {
-
-    if (broken) {
-
-        repairTimer++;
-
-        if (repairTimer >= 5) {
-            broken = false;
-            state = MachineState::IDLE;
-            repairTimer = 0;
-        }
-
-        return;
-    }
-
-    if (state == MachineState::WORKING) {
-
-        if (settings.enableBreakdown) {
-
-            float r = (float)rand() / RAND_MAX;
-
-            if (r < breakChance) {
-
-                broken = true;
-
-                state = MachineState::BROKEN;
-
-                repairTimer = 0;
-
-                health -= 25;
-
-                if (health < 10)
-                    health = 10;
-
-                return;
-            }
-        }
-
-        progress++;
-
-        health -= 0.2f;
-
-        if (health < 20)
-            health = 20;
-
-        if (progress >= processTime) {
-
-            Product current = queue.front();
-            queue.pop();
-
-            process(current);
-
-            finishedProduct = current;
-
-            hasFinishedProduct = true;
-
-            outputCount++;
-
-            progress = 0;
-
-            state = MachineState::IDLE;
-        }
-    }
-
-    if (!queue.empty() && state == MachineState::IDLE) {
-
-        state = MachineState::WORKING;
-    }
+void Machine::update(
+    int tick,
+    const SimulationSettings&
+)
+{
+    machineState
+        ->update(
+            *this,
+            tick
+        );
 }
 
 std::string Machine::getName() const {
@@ -113,41 +57,30 @@ std::string Machine::getInfo() const {
        << " | Health: "
        << health;
 
-    if (state == MachineState::BROKEN) {
-
+    if (isBroken())
+    {
         ss << " | Progress: PAUSED";
     }
-    else {
-
+    else
+    {
         ss << " | Progress: "
-           << progressPercent
-           << "%";
+        << progressPercent
+        << "%";
     }
 
     return ss.str();
 }
 
-std::string Machine::getStateString() const {
-
-    switch (state) {
-
-    case MachineState::IDLE:
-        return "IDLE";
-
-    case MachineState::WORKING:
-        return "WORKING";
-
-    case MachineState::BROKEN:
-        return "BROKEN";
-
-    default:
-        return "UNKNOWN";
-    }
+std::string Machine::getStateString() const
+{
+    return machineState
+        ->getName();
 }
 
-MachineState Machine::getState() const {
-
-    return state;
+std::string Machine::getState() const
+{
+    return machineState
+        ->getName();
 }
 
 int Machine::getQueueSize() const {
@@ -187,9 +120,9 @@ void Machine::forceBreak() {
 
     broken = true;
 
-    state = MachineState::BROKEN;
-
     repairTimer = 0;
+
+    setBroken();
 
     health -= 30;
 
@@ -201,9 +134,9 @@ void Machine::forceRepair() {
 
     broken = false;
 
-    state = MachineState::IDLE;
-
     repairTimer = 0;
+
+    setIdle();
 
     progress = 0;
 
@@ -237,4 +170,40 @@ void Machine::resetProcessingTime()
 void Machine::breakMachine()
 {
     forceBreak();
+}
+
+void Machine::setState(
+    std::unique_ptr<IMachineState> state
+)
+{
+    machineState =
+        std::move(state);
+}
+
+void Machine::setIdle()
+{
+    machineState=
+        std::make_unique<IdleState>();
+}
+
+void Machine::setWorking()
+{
+    machineState=
+        std::make_unique<WorkingState>();
+}
+
+void Machine::setBroken()
+{
+    machineState=
+        std::make_unique<BrokenState>();
+}
+
+bool Machine::hasQueue() const
+{
+    return !queue.empty();
+}
+
+Product& Machine::currentProduct()
+{
+    return queue.front();
 }

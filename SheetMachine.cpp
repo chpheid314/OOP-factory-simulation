@@ -1,7 +1,7 @@
 #include "SheetMachine.h"
 
 SheetMachine::SheetMachine()
-    : Machine("Sheet Machine", 3, 0.03f)
+    : Machine("Sheet Machine", 3)
 {
 }
 
@@ -10,7 +10,7 @@ void SheetMachine::process(Product& product) {
     product.addQuality(5);
 }
 
-std::string SheetMachine::getName() const {
-
+std::string SheetMachine::getDescription() const
+{
     return "Creates cake sheets";
 }

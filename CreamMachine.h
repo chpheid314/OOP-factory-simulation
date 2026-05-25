@@ -8,5 +8,5 @@ public:
 
     virtual void process(Product& product) override;
 
-    virtual std::string getName() const override;
+    std::string getDescription() const;
 };

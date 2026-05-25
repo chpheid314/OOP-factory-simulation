@@ -2,16 +2,16 @@
 
 #include <string>
 #include <queue>
+#include <memory>
 
 #include "SimulationObject.h"
-#include "MachineState.h"
 #include "Product.h"
+#include "IMachineState.h"
 
 class Machine : public SimulationObject {
 public:
     Machine(const std::string& name,
-        int processTime,
-        float breakChance);
+        int processTime);
     virtual ~Machine() = default;
 
     virtual void update(
@@ -27,7 +27,7 @@ public:
 
     std::string getStateString() const;
 
-    MachineState getState() const;
+    std::string getState() const;
 
     int getQueueSize() const;
     int getOutputCount() const;
@@ -54,10 +54,28 @@ public:
 
     virtual bool isBroken() const;
 
+    void setState(
+        std::unique_ptr<IMachineState> state
+    );
+
+    void setIdle();
+
+    void setWorking();
+
+    void setBroken();
+
+    bool hasQueue() const;
+
+    Product& currentProduct();
+
+    friend class IdleState;
+    friend class WorkingState;
+    friend class BrokenState;
+
 protected:
     std::string name;
 
-    MachineState state;
+    std::unique_ptr<IMachineState> machineState;
 
     float health;
 
@@ -73,8 +91,6 @@ protected:
     Product finishedProduct;
 
     int outputCount;
-
-    float breakChance;
 
     int defaultProcessTime;
 
