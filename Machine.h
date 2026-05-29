@@ -4,11 +4,11 @@
 #include <queue>
 #include <memory>
 
-#include "SimulationObject.h"
+#include "SimulationSettings.h"
 #include "Product.h"
 #include "IMachineState.h"
 
-class Machine : public SimulationObject {
+class Machine {
 public:
     Machine(const std::string& name,
         int processTime);
@@ -17,13 +17,13 @@ public:
     virtual void update(
         int tick,
         const SimulationSettings& settings
-    ) override;
+    );
 
     virtual void process(Product& product) = 0;
 
-    virtual std::string getInfo() const override;
+    virtual std::string getInfo() const;
 
-    virtual std::string getName() const override;
+    virtual std::string getName() const;
 
     std::string getStateString() const;
 
