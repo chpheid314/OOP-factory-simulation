@@ -29,15 +29,13 @@ void ProductionLine::reset()
 }
 
 void ProductionLine::update(
-    int tick,
-    const SimulationSettings& settings
+    int tick
 )
 {
     for(auto& machine : machines)
     {
         machine->update(
-            tick,
-            settings
+            tick
         );
     }
 

@@ -5,7 +5,6 @@
 
 #include "Machine.h"
 #include "CakeType.h"
-#include "SimulationSettings.h"
 #include "ProductionLine.h"
 #include "ScenarioManager.h"
 
@@ -36,8 +35,6 @@ public:
 
     std::vector<std::unique_ptr<Machine>>& getMachines();
 
-    SimulationSettings& getSettings();
-
     ProductionLine& getProductionLine();
 
 private:
@@ -54,8 +51,6 @@ private:
     int finishedCount;
     int lostCount;
     int breakdownCount;
-
-    SimulationSettings settings;
 
     ScenarioManager scenarioManager;
 };

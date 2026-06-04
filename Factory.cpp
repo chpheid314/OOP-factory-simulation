@@ -53,8 +53,7 @@ void Factory::update() {
     );
 
     line.update(
-        tick,
-        settings
+        tick
     );
 
     if(line.hasFinishedProduct())
@@ -143,11 +142,6 @@ int Factory::getBreakdownCount() const {
 std::vector<std::unique_ptr<Machine>>& Factory::getMachines() {
 
     return line.getMachines();
-}
-
-SimulationSettings& Factory::getSettings() {
-
-    return settings;
 }
 
 ProductionLine& Factory::getProductionLine()
