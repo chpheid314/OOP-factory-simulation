@@ -56,14 +56,28 @@ void Factory::update() {
     {
         Product p= line.popFinishedProduct();
 
-        statistics.addFinished();
+        if(p.isBurned())
+        {
+            statistics.addLost();
 
-        std::cout
-            << "Product "
-            << p.getId()
-            << " completed! Quality: "
-            << p.getQuality()
-            << std::endl;
+            std::cout
+                << "Product "
+                << p.getId()
+                << " burned! Quality: "
+                << p.getQuality()
+                << std::endl;
+        }
+        else
+        {
+            statistics.addFinished();
+
+            std::cout
+                << "Product "
+                << p.getId()
+                << " completed! Quality: "
+                << p.getQuality()
+                << std::endl;
+        }
     }
 }
 
