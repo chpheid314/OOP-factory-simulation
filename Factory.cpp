@@ -20,7 +20,9 @@ Factory::Factory() {
     nextProductId = 1;
 
     scenarioManager.addScenario(
-    std::make_unique<RandomBreakScenario>()
+        std::make_unique<RandomBreakScenario>(
+            &statistics
+        )
     );
 
     scenarioManager.addScenario(
@@ -152,4 +154,9 @@ std::vector<std::unique_ptr<Machine>>& Factory::getMachines() {
 ProductionLine& Factory::getProductionLine()
 {
     return line;
+}
+
+void Factory::addBreakdown()
+{
+    statistics.addBreakdown();
 }

@@ -34,6 +34,8 @@ public:
     int getLostCount() const;
     int getBreakdownCount() const;
 
+    void addBreakdown();
+
     std::vector<std::unique_ptr<Machine>>& getMachines();
 
     ProductionLine& getProductionLine();
