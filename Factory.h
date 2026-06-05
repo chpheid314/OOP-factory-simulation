@@ -7,6 +7,7 @@
 #include "CakeType.h"
 #include "ProductionLine.h"
 #include "ScenarioManager.h"
+#include "StatisticsManager.h"
 
 class Factory {
 public:
@@ -40,6 +41,8 @@ public:
 private:
     ProductionLine line;
 
+    StatisticsManager statistics;
+
     int tick;
 
     bool running;
@@ -47,10 +50,6 @@ private:
     CakeType currentRecipe;
 
     int nextProductId;
-
-    int finishedCount;
-    int lostCount;
-    int breakdownCount;
 
     ScenarioManager scenarioManager;
 };
