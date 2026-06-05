@@ -32,3 +32,32 @@ void ScenarioManager::reset(
         scenario->reset(line);
     }
 }
+
+bool ScenarioManager::isEnabled(
+    int index
+) const
+{
+    if(index < 0 ||
+       index >= scenarios.size())
+    {
+        return false;
+    }
+
+    return scenarios[index]->isEnabled();
+}
+
+void ScenarioManager::setEnabled(
+    int index,
+    bool enabled
+)
+{
+    if(index < 0 ||
+       index >= scenarios.size())
+    {
+        return;
+    }
+
+    scenarios[index]->setEnabled(
+        enabled
+    );
+}

@@ -5,9 +5,9 @@
 
 #include "Machine.h"
 #include "CakeType.h"
-#include "SimulationSettings.h"
 #include "ProductionLine.h"
 #include "ScenarioManager.h"
+#include "StatisticsManager.h"
 
 class Factory {
 public:
@@ -34,14 +34,16 @@ public:
     int getLostCount() const;
     int getBreakdownCount() const;
 
-    std::vector<std::unique_ptr<Machine>>& getMachines();
+    void addBreakdown();
 
-    SimulationSettings& getSettings();
+    std::vector<std::unique_ptr<Machine>>& getMachines();
 
     ProductionLine& getProductionLine();
 
 private:
     ProductionLine line;
+
+    StatisticsManager statistics;
 
     int tick;
 
@@ -50,12 +52,6 @@ private:
     CakeType currentRecipe;
 
     int nextProductId;
-
-    int finishedCount;
-    int lostCount;
-    int breakdownCount;
-
-    SimulationSettings settings;
 
     ScenarioManager scenarioManager;
 };

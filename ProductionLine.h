@@ -10,8 +10,7 @@ public:
     ProductionLine();
 
     void update(
-        int tick,
-        const SimulationSettings& settings
+        int tick
     );
 
     void reset();

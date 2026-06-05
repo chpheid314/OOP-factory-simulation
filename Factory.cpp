@@ -19,12 +19,10 @@ Factory::Factory() {
 
     nextProductId = 1;
 
-    finishedCount = 0;
-    lostCount = 0;
-    breakdownCount = 0;
-
     scenarioManager.addScenario(
-    std::make_unique<RandomBreakScenario>()
+        std::make_unique<RandomBreakScenario>(
+            &statistics
+        )
     );
 
     scenarioManager.addScenario(
@@ -53,39 +51,47 @@ void Factory::update() {
     );
 
     line.update(
-        tick,
-        settings
+        tick
     );
 
     if(line.hasFinishedProduct())
     {
-        Product p=
-            line.popFinishedProduct();
+        Product p= line.popFinishedProduct();
 
-        finishedCount++;
+        if(p.isBurned())
+        {
+            statistics.addLost();
 
-        std::cout
-            << "Product "
-            << p.getId()
-            << " completed! Quality: "
-            << p.getQuality()
-            << std::endl;
+            std::cout
+                << "Product "
+                << p.getId()
+                << " burned! Quality: "
+                << p.getQuality()
+                << std::endl;
+        }
+        else
+        {
+            statistics.addFinished();
+
+            std::cout
+                << "Product "
+                << p.getId()
+                << " completed! Quality: "
+                << p.getQuality()
+                << std::endl;
+        }
     }
 }
 
-void Factory::reset() {
-
+void Factory::reset()
+{
     line.reset();
 
     tick = 0;
 
-    finishedCount = 0;
-    lostCount = 0;
-    breakdownCount = 0;
+    statistics.reset();
 
-    scenarioManager.reset(
-        line
-    );
+    scenarioManager.reset(line);
 }
 
 void Factory::start() {
@@ -127,17 +133,17 @@ int Factory::getTick() const {
 
 int Factory::getFinishedCount() const {
 
-    return finishedCount;
+    return statistics.getFinishedCount();
 }
 
 int Factory::getLostCount() const {
 
-    return lostCount;
+    return statistics.getLostCount();
 }
 
 int Factory::getBreakdownCount() const {
 
-    return breakdownCount;
+    return statistics.getBreakdownCount();
 }
 
 std::vector<std::unique_ptr<Machine>>& Factory::getMachines() {
@@ -145,12 +151,12 @@ std::vector<std::unique_ptr<Machine>>& Factory::getMachines() {
     return line.getMachines();
 }
 
-SimulationSettings& Factory::getSettings() {
-
-    return settings;
-}
-
 ProductionLine& Factory::getProductionLine()
 {
     return line;
+}
+
+void Factory::addBreakdown()
+{
+    statistics.addBreakdown();
 }

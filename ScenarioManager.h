@@ -21,6 +21,17 @@ public:
         ProductionLine& line
     );
 
+    bool isEnabled(
+        int index
+    ) const;
+
+    void setEnabled(
+        int index,
+        bool enabled
+    );
+
+    int getScenarioCount() const;
+
 private:
 
     std::vector<

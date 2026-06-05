@@ -27,8 +27,7 @@ Machine::Machine(const std::string& name,
 }
 
 void Machine::update(
-    int tick,
-    const SimulationSettings&
+    int tick
 )
 {
     machineState
