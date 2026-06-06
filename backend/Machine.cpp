@@ -1,5 +1,6 @@
 #include <sstream>
 #include "Machine.h"
+#include "SimulationSettings.h"
 #include "IdleState.h"
 #include "WorkingState.h"
 #include "BrokenState.h"
@@ -28,15 +29,15 @@ Machine::Machine(const std::string& name,
 
 void Machine::update(
     int tick,
-    const SimulationSettings&
+    const SimulationSettings& settings
 )
 {
-    machineState
-        ->update(
-            *this,
-            tick
-        );
+    if (broken)
+        return;
+
+    machineState->update(*this, tick, settings);
 }
+
 
 std::string Machine::getName() const {
 
@@ -48,7 +49,7 @@ std::string Machine::getInfo() const {
     std::stringstream ss;
 
     float progressPercent =
-        (float)progress / processTime * 100;
+        (processTime > 0) ? (float)progress / processTime * 100.0f : 0.0f;
 
     ss << "[" << getStateString() << "] "
        << name
@@ -100,8 +101,8 @@ float Machine::getHealth() const {
 
 float Machine::getProgress() const {
 
-    if (processTime == 0)
-        return 0;
+    if (processTime <= 0)
+        return 0.0f;
 
     return (float)progress / processTime * 100.0f;
 }
@@ -141,6 +142,8 @@ void Machine::forceRepair() {
     progress = 0;
 
     health = 100;
+
+    
 }
 
 bool Machine::hasOutputProduct() const {

@@ -8,10 +8,11 @@
 #include "SimulationSettings.h"
 #include "ProductionLine.h"
 #include "ScenarioManager.h"
+#include "EventManager.h"
 
 class Factory {
 public:
-    Factory();
+    Factory(EventManager& bus);
 
     void update();
 
@@ -58,4 +59,6 @@ private:
     SimulationSettings settings;
 
     ScenarioManager scenarioManager;
+
+    EventManager& eventBus;
 };

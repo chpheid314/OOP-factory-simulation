@@ -1,4 +1,5 @@
 #pragma once
+#include "SimulationSettings.h"
 
 class ProductionLine;
 
@@ -9,11 +10,11 @@ public:
     virtual ~Scenario()=default;
 
     virtual void apply(
-        ProductionLine& line
+        ProductionLine& line, int tick, const SimulationSettings& settings
     )=0;
 
     virtual void reset(
-        ProductionLine& line
+        ProductionLine& line, int tick, const SimulationSettings& settings
     )=0;
 
     void setEnabled(

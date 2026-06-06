@@ -2,13 +2,14 @@
 
 #include "IMachineState.h"
 
-class WorkingState : public IMachineState
+class BrokenState : public IMachineState
 {
 public:
 
     void update(
         Machine& machine,
-        int tick
+        int tick,
+        const SimulationSettings& settings
     ) override;
 
     const char* getName() const override;

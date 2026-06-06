@@ -3,7 +3,8 @@
 
 void BrokenState::update(
     Machine& machine,
-    int
+    int tick,
+    const SimulationSettings& settings
 )
 {
     machine.repairTimer++;

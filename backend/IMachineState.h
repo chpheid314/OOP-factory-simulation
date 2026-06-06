@@ -1,4 +1,5 @@
 #pragma once
+#include "SimulationSettings.h"
 
 class Machine;
 
@@ -10,7 +11,8 @@ public:
 
     virtual void update(
         Machine& machine,
-        int tick
+        int tick,
+        const SimulationSettings& settings
     ) = 0;
 
     virtual const char* getName() const = 0;

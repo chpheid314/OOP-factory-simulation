@@ -5,6 +5,8 @@
 
 #include "Scenario.h"
 
+class ProductionLine;
+
 class ScenarioManager
 {
 public:
@@ -14,11 +16,11 @@ public:
     );
 
     void apply(
-        ProductionLine& line
+        ProductionLine& line, int tick, const SimulationSettings& settings
     );
 
     void reset(
-        ProductionLine& line
+        ProductionLine& line, int tick, const SimulationSettings& settings
     );
 
 private:

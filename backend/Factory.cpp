@@ -1,15 +1,21 @@
 #include "Factory.h"
-
-#include <iostream>
+#include "Event.h"
+#include "EventManager.h"
 
 #include "SheetMachine.h"
 #include "CreamMachine.h"
 #include "ToppingMachine.h"
+
 #include "RandomBreakScenario.h"
 #include "BottleneckScenario.h"
 #include "OverflowScenario.h"
 
-Factory::Factory() {
+#include "Product.h"
+
+#include <iostream>
+
+
+Factory::Factory(EventManager& bus) : eventBus(bus) {
 
     tick = 0;
 
@@ -49,7 +55,7 @@ void Factory::update() {
     }
 
     scenarioManager.apply(
-        line
+        line, tick, settings
     );
 
     line.update(
@@ -64,12 +70,11 @@ void Factory::update() {
 
         finishedCount++;
 
-        std::cout
-            << "Product "
-            << p.getId()
-            << " completed! Quality: "
-            << p.getQuality()
-            << std::endl;
+        eventBus.emit({
+            EventType::PRODUCT_DONE,
+            "Product " + std::to_string(p.getId()) +
+            " completed! Quality: " + std::to_string(p.getQuality())
+        });
     }
 }
 
@@ -84,23 +89,35 @@ void Factory::reset() {
     breakdownCount = 0;
 
     scenarioManager.reset(
-        line
+        line, tick, settings
     );
 }
 
 void Factory::start() {
 
     running = true;
+
+      eventBus.emit({
+        EventType::INFO,
+        "Factory started"
+    });
 }
 
 void Factory::pause() {
 
     running = false;
+
+    eventBus.emit({
+        EventType::INFO,
+        "Factory paused"
+    });
 }
 
 bool Factory::isRunning() const {
 
     return running;
+
+    
 }
 
 void Factory::spawnProduct() {

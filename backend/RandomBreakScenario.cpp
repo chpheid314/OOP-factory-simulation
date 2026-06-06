@@ -5,7 +5,9 @@
 #include "ProductionLine.h"
 
 void RandomBreakScenario::apply(
-    ProductionLine& line
+    ProductionLine& line,
+    int tick,
+    const SimulationSettings& settings
 )
 {
     auto& machines=
@@ -21,7 +23,9 @@ void RandomBreakScenario::apply(
 }
 
 void RandomBreakScenario::reset(
-    ProductionLine&
+    ProductionLine& line,
+    int tick,
+    const SimulationSettings& settings
 )
 {
 }
