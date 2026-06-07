@@ -25,12 +25,10 @@ Factory::Factory(EventManager& bus) : eventBus(bus) {
 
     nextProductId = 1;
 
-    finishedCount = 0;
-    lostCount = 0;
-    breakdownCount = 0;
-
     scenarioManager.addScenario(
-    std::make_unique<RandomBreakScenario>()
+        std::make_unique<RandomBreakScenario>(
+            &statistics
+        )
     );
 
     scenarioManager.addScenario(
@@ -55,42 +53,59 @@ void Factory::update() {
     }
 
     scenarioManager.apply(
-        line, tick, settings
+        line
     );
 
     line.update(
-        tick,
-        settings
+        tick
     );
 
     if(line.hasFinishedProduct())
     {
-        Product p=
-            line.popFinishedProduct();
+        Product p= line.popFinishedProduct();
 
-        finishedCount++;
+        if(p.isBurned())
+        {
+            statistics.addLost();
 
-        eventBus.emit({
-            EventType::PRODUCT_DONE,
-            "Product " + std::to_string(p.getId()) +
-            " completed! Quality: " + std::to_string(p.getQuality())
-        });
+            std::cout
+                << "Product "
+                << p.getId()
+                << " burned! Quality: "
+                << p.getQuality()
+                << std::endl;
+
+            // 수정 필요: eventBus.emit, 즉 여기도 UI 표출
+        }
+        else
+        {
+            statistics.addFinished();
+
+            std::cout
+                << "Product "
+                << p.getId()
+                << " completed! Quality: "
+                << p.getQuality()
+                << std::endl;
+
+            eventBus.emit({
+                EventType::PRODUCT_DONE,
+                "Product " + std::to_string(p.getId()) +
+                " completed! Quality: " + std::to_string(p.getQuality())
+            });
+        }
     }
 }
 
-void Factory::reset() {
-
+void Factory::reset()
+{
     line.reset();
 
     tick = 0;
 
-    finishedCount = 0;
-    lostCount = 0;
-    breakdownCount = 0;
+    statistics.reset();
 
-    scenarioManager.reset(
-        line, tick, settings
-    );
+    scenarioManager.reset(line);
 }
 
 void Factory::start() {
@@ -144,17 +159,17 @@ int Factory::getTick() const {
 
 int Factory::getFinishedCount() const {
 
-    return finishedCount;
+    return statistics.getFinishedCount();
 }
 
 int Factory::getLostCount() const {
 
-    return lostCount;
+    return statistics.getLostCount();
 }
 
 int Factory::getBreakdownCount() const {
 
-    return breakdownCount;
+    return statistics.getBreakdownCount();
 }
 
 std::vector<std::unique_ptr<Machine>>& Factory::getMachines() {
@@ -162,12 +177,12 @@ std::vector<std::unique_ptr<Machine>>& Factory::getMachines() {
     return line.getMachines();
 }
 
-SimulationSettings& Factory::getSettings() {
-
-    return settings;
-}
-
 ProductionLine& Factory::getProductionLine()
 {
     return line;
+}
+
+void Factory::addBreakdown()
+{
+    statistics.addBreakdown();
 }

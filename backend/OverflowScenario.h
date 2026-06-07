@@ -8,14 +8,10 @@ class OverflowScenario
 public:
 
     void apply(
-        ProductionLine& line,
-        int tick,
-        const SimulationSettings& settings
+        ProductionLine& line
     ) override;
 
     void reset(
-        ProductionLine& line,
-        int tick,
-        const SimulationSettings& settings
+        ProductionLine& line
     ) override;
 };

@@ -3,8 +3,7 @@
 
 void WorkingState::update(
     Machine& machine,
-    int tick,
-    const SimulationSettings& settings
+    int tick
 )
 {
     machine.progress++;

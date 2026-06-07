@@ -3,9 +3,7 @@
 #include "ProductionLine.h"
 
 void BottleneckScenario::apply(
-    ProductionLine& line,
-    int tick,
-    const SimulationSettings& settings
+    ProductionLine& line
 )
 {
     auto& machines=
@@ -18,9 +16,7 @@ void BottleneckScenario::apply(
 }
 
 void BottleneckScenario::reset(
-    ProductionLine& line,
-    int tick,
-    const SimulationSettings& settings
+    ProductionLine& line
 )
 {
     auto& machines=

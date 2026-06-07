@@ -16,12 +16,23 @@ public:
     );
 
     void apply(
-        ProductionLine& line, int tick, const SimulationSettings& settings
+        ProductionLine& line
     );
 
     void reset(
-        ProductionLine& line, int tick, const SimulationSettings& settings
+        ProductionLine& line
     );
+
+    bool isEnabled(
+        int index
+    ) const;
+
+    void setEnabled(
+        int index,
+        bool enabled
+    );
+
+    int getScenarioCount() const;
 
 private:
 

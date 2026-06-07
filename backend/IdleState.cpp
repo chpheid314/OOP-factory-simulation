@@ -3,8 +3,7 @@
 
 void IdleState::update(
     Machine& machine,
-    int tick,
-    const SimulationSettings& settings
+    int tick
 )
 {
     if(machine.hasQueue())

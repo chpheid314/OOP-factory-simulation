@@ -8,8 +8,7 @@ public:
 
     void update(
         Machine& machine,
-        int tick,
-        const SimulationSettings& settings
+        int tick
     ) override;
 
     const char* getName() const override;

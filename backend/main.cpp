@@ -3,9 +3,9 @@
 #include <chrono>
 #include <ctime>
 #include "Factory.h"
-#include "../UI/UIEventListener.h"
+//#include "../UI/UIEventListener.h"
 #include "EventManager.h"
-#include "Logger.h"
+#include "logger.h"
 
 int main() {
 
@@ -16,8 +16,8 @@ int main() {
     Logger::getInstance().init("app.log");
     eventBus.subscribe(&Logger::getInstance());
 
-    UIEventListener ui;
-    eventBus.subscribe(&ui);
+    //UIEventListener ui;
+    //eventBus.subscribe(&ui);
     Factory factory(eventBus);
     // Scenario setting
     //factory.getSettings().enableBreakdown = false;

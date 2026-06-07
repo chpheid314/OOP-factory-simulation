@@ -1,6 +1,5 @@
 #include <sstream>
 #include "Machine.h"
-#include "SimulationSettings.h"
 #include "IdleState.h"
 #include "WorkingState.h"
 #include "BrokenState.h"
@@ -28,14 +27,13 @@ Machine::Machine(const std::string& name,
 }
 
 void Machine::update(
-    int tick,
-    const SimulationSettings& settings
+    int tick
 )
 {
     if (broken)
         return;
 
-    machineState->update(*this, tick, settings);
+    machineState->update(*this, tick);
 }
 
 

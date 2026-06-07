@@ -3,9 +3,7 @@
 #include "ProductionLine.h"
 
 void OverflowScenario::apply(
-    ProductionLine& line,
-    int tick,
-    const SimulationSettings& settings
+    ProductionLine& line
 )
 {
     for(int i=0;i<3;i++)
@@ -20,9 +18,7 @@ void OverflowScenario::apply(
 }
 
 void OverflowScenario::reset(
-    ProductionLine& line,
-    int tick,
-    const SimulationSettings& settings
+    ProductionLine& line
 )
 {
 }

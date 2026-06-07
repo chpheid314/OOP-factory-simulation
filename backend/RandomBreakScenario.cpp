@@ -4,10 +4,15 @@
 
 #include "ProductionLine.h"
 
+RandomBreakScenario::RandomBreakScenario(
+    StatisticsManager* statistics
+)
+    : statistics(statistics)
+{
+}
+
 void RandomBreakScenario::apply(
-    ProductionLine& line,
-    int tick,
-    const SimulationSettings& settings
+    ProductionLine& line
 )
 {
     auto& machines=
@@ -18,14 +23,17 @@ void RandomBreakScenario::apply(
         if(rand()%100<2)
         {
             machine->breakMachine();
+
+            if(statistics)
+            {
+                statistics->addBreakdown();
+            }
         }
     }
 }
 
 void RandomBreakScenario::reset(
-    ProductionLine& line,
-    int tick,
-    const SimulationSettings& settings
+    ProductionLine& line
 )
 {
 }

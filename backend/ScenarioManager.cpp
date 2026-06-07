@@ -1,6 +1,5 @@
 #include "ScenarioManager.h"
 #include "ProductionLine.h"
-#include "SimulationSettings.h"
 
 void ScenarioManager::addScenario(
     std::unique_ptr<Scenario> scenario
@@ -12,24 +11,53 @@ void ScenarioManager::addScenario(
 }
 
 void ScenarioManager::apply(
-    ProductionLine& line, int tick, const SimulationSettings& settings
+    ProductionLine& line
 )
 {
     for(auto& scenario : scenarios)
     {
         if(scenario->isEnabled())
         {
-            scenario->apply(line, tick, settings);
+            scenario->apply(line);
         }
     }
 }
 
 void ScenarioManager::reset(
-    ProductionLine& line, int tick, const SimulationSettings& settings
+    ProductionLine& line
 )
 {
     for(auto& scenario : scenarios)
     {
-        scenario->reset(line, tick, settings);
+        scenario->reset(line);
     }
+}
+
+bool ScenarioManager::isEnabled(
+    int index
+) const
+{
+    if(index < 0 ||
+       index >= scenarios.size())
+    {
+        return false;
+    }
+
+    return scenarios[index]->isEnabled();
+}
+
+void ScenarioManager::setEnabled(
+    int index,
+    bool enabled
+)
+{
+    if(index < 0 ||
+       index >= scenarios.size())
+    {
+        return;
+    }
+
+    scenarios[index]->setEnabled(
+        enabled
+    );
 }

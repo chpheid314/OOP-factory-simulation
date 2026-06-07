@@ -4,7 +4,6 @@
 #include <queue>
 #include <memory>
 
-#include "SimulationSettings.h"
 #include "Product.h"
 #include "IMachineState.h"
 
@@ -15,8 +14,7 @@ public:
     virtual ~Machine() = default;
 
     virtual void update(
-        int tick,
-        const SimulationSettings& settings
+        int tick
     );
 
     virtual void process(Product& product) = 0;
