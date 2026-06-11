@@ -5,7 +5,7 @@
 #include "Factory.h"
 //#include "../UI/UIEventListener.h"
 #include "EventManager.h"
-#include "logger.h"
+#include "Logger.h"
 
 int main() {
 

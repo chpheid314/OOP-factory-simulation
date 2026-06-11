@@ -186,3 +186,8 @@ void Factory::addBreakdown()
 {
     statistics.addBreakdown();
 }
+
+ScenarioManager& Factory::getScenarioManager()
+{
+    return scenarioManager;
+}

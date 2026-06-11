@@ -1,0 +1,69 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build ImGui Project",
+      "type": "process",
+      "options": {
+        "env": {
+          "TEMP": "C:/Temp",
+          "TMP": "C:/Temp"
+        }
+      },
+      "command": "C:/msys64/ucrt64/bin/g++.exe",
+
+      "args": [
+        "-std=c++17",
+        "src/UI/main.cpp",
+        "src/UI/FactoryUI.cpp",
+
+        "src/backend/EventManager.cpp",
+        "src/backend/Logger.cpp",
+
+        "src/backend/Factory.cpp",
+        "src/backend/Machine.cpp",
+        "src/backend/Product.cpp",
+        "src/backend/ProductionLine.cpp",
+
+        "src/backend/SheetMachine.cpp",
+        "src/backend/CreamMachine.cpp",
+        "src/backend/ToppingMachine.cpp",
+
+        "src/backend/IdleState.cpp",
+        "src/backend/WorkingState.cpp",
+        "src/backend/BrokenState.cpp",
+
+        "src/backend/Scenario.cpp",
+        "src/backend/ScenarioManager.cpp",
+        "src/backend/RandomBreakScenario.cpp",
+        "src/backend/BottleneckScenario.cpp",
+        "src/backend/OverflowScenario.cpp",
+
+        "src/backend/StatisticsManager.cpp",
+
+        "libs/imgui/imgui.cpp",
+        "libs/imgui/imgui_draw.cpp",
+        "libs/imgui/imgui_tables.cpp",
+        "libs/imgui/imgui_widgets.cpp",
+        "libs/imgui/backends/imgui_impl_sdl2.cpp",
+        "libs/imgui/backends/imgui_impl_opengl3.cpp",
+        "-Ilibs/imgui",
+        "-Ilibs/imgui/backends",
+        "-IC:/msys64/ucrt64/include/SDL2",
+        "-LC:/msys64/ucrt64/lib",
+        "-lmingw32",
+        "-lSDL2main",
+        "-lSDL2",
+        "-lopengl32",
+        "-mwindows",
+        "-o",
+        "build/app.exe"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"]
+    }
+  ]
+}

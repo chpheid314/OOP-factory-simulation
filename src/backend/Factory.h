@@ -41,6 +41,8 @@ public:
 
     ProductionLine& getProductionLine();
 
+    ScenarioManager& getScenarioManager();
+
 private:
     ProductionLine line;
 
