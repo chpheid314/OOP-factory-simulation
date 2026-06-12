@@ -3,12 +3,15 @@
 #include "Scenario.h"
 #include "StatisticsManager.h"
 
+class EventManager;
+
 class RandomBreakScenario
     : public Scenario
 {
 public:
     explicit RandomBreakScenario(
-        StatisticsManager* statistics
+        StatisticsManager* statistics,
+        EventManager* eventBus
     );
     void apply(
         ProductionLine& line
@@ -19,4 +22,6 @@ public:
     ) override;
 private:
     StatisticsManager* statistics;
+
+    EventManager* eventBus;
 };

@@ -27,7 +27,8 @@ Factory::Factory(EventManager& bus) : eventBus(bus) {
 
     scenarioManager.addScenario(
         std::make_unique<RandomBreakScenario>(
-            &statistics
+            &statistics,
+            &eventBus
         )
     );
 
@@ -59,6 +60,18 @@ void Factory::update() {
     line.update(
         tick
     );
+
+    for(auto& machine : line.getMachines())
+    {
+        if(machine->consumeAutoRepairFlag())
+        {
+            eventBus.emit({
+                EventType::MACHINE_REPAIRED,
+                machine->getName()
+                + " machine repaired automatically"
+            });
+        }
+    }
 
     int overflowLost =
         line.consumeOverflowLostCount();
@@ -196,4 +209,9 @@ void Factory::addBreakdown()
 ScenarioManager& Factory::getScenarioManager()
 {
     return scenarioManager;
+}
+
+int Factory::getWipCount() const
+{
+    return line.getWipCount();
 }

@@ -167,15 +167,40 @@ int main(int argc, char* argv[])
             cmd.selectedMachine >= 0 &&
             cmd.selectedMachine < (int)machines.size())
         {
-        machines[cmd.selectedMachine]->forceBreak();
-        cmd.forceBreak = false;
+            if(
+                machines[cmd.selectedMachine]
+                    ->forceBreak()
+            )
+            {
+                factory.addBreakdown();
+
+                eventBus.emit({
+                    EventType::MACHINE_BREAKDOWN,
+                    machines[cmd.selectedMachine]->getName()
+                        + " machine broke down (manual)"
+                });
+            }
+            cmd.forceBreak = false;
         }
 
         if (cmd.instantRepair &&
             cmd.selectedMachine >= 0 &&
             cmd.selectedMachine < (int)machines.size())
         {
-        machines[cmd.selectedMachine]->forceRepair();
+        if(
+            machines[cmd.selectedMachine]
+                ->isBroken()
+        )
+        {
+            machines[cmd.selectedMachine]
+                ->forceRepair();
+
+            eventBus.emit({
+                EventType::MACHINE_REPAIRED,
+                machines[cmd.selectedMachine]->getName()
+                + " machine repaired (manual)"
+            });
+        }
         cmd.instantRepair = false;
         }
 
@@ -201,6 +226,8 @@ int main(int argc, char* argv[])
 
         snap.recipe = factory.getRecipe();
 
+        snap.wipCount = factory.getWipCount();
+
 // =========================
 // Machine Snapshot
 // =========================
@@ -211,7 +238,23 @@ int main(int argc, char* argv[])
                 machines[0]->getName();
 
             snap.sheet.health =
-                machines[0]->getHealth();
+                machines[0]->getHealth()/100.0f;
+
+            if (machines[0]->getState() == "BROKEN")
+            {
+                snap.sheet.state =
+                    MachineVisualState::BROKEN;
+            }
+            else if (machines[0]->getState() == "WORKING")
+            {
+                snap.sheet.state =
+                    MachineVisualState::WORKING;
+            }
+            else
+            {
+                snap.sheet.state =
+                    MachineVisualState::IDLE;
+            }
 
             snap.sheet.progress =
                 machines[0]->getProgress()/100.0f;
@@ -226,7 +269,23 @@ int main(int argc, char* argv[])
                 machines[1]->getName();
 
             snap.cream.health =
-                machines[1]->getHealth();
+                machines[1]->getHealth() / 100.0f;
+
+            if (machines[1]->getState() == "BROKEN")
+            {
+                snap.cream.state =
+                    MachineVisualState::BROKEN;
+            }
+            else if (machines[1]->getState() == "WORKING")
+            {
+                snap.cream.state =
+                    MachineVisualState::WORKING;
+            }
+            else
+            {
+                snap.cream.state =
+                    MachineVisualState::IDLE;
+            }
 
             snap.cream.progress =
                 machines[1]->getProgress() / 100.0f;
@@ -241,7 +300,23 @@ int main(int argc, char* argv[])
                 machines[2]->getName();
 
             snap.topping.health =
-                machines[2]->getHealth();
+                machines[2]->getHealth() / 100.0f;
+
+            if (machines[2]->getState() == "BROKEN")
+            {
+                snap.topping.state =
+                    MachineVisualState::BROKEN;
+            }
+            else if (machines[2]->getState() == "WORKING")
+            {
+                snap.topping.state =
+                    MachineVisualState::WORKING;
+            }
+            else
+            {
+                snap.topping.state =
+                    MachineVisualState::IDLE;
+            }
 
             snap.topping.progress =
                 machines[2]->getProgress() / 100.0f;
@@ -251,6 +326,36 @@ int main(int argc, char* argv[])
 
             snap.topping.outputCount =
                 machines[2]->getOutputCount();
+            bool overflowEnabled =
+                cmd.scenario ==
+                ScenarioType::OVERFLOW;
+
+            snap.sheet.finiteQueue =
+                overflowEnabled;
+
+            snap.cream.finiteQueue =
+                overflowEnabled;
+
+            snap.topping.finiteQueue =
+                overflowEnabled;
+
+            if (overflowEnabled)
+            {
+                snap.sheet.conveyorLoad =
+                    machines[0]->getQueueSize() / 10.0f;
+
+                snap.cream.conveyorLoad =
+                    machines[1]->getQueueSize() / 10.0f;
+
+                snap.topping.conveyorLoad =
+                    machines[2]->getQueueSize() / 10.0f;
+            }
+            else
+            {
+                snap.sheet.conveyorLoad = 0.0f;
+                snap.cream.conveyorLoad = 0.0f;
+                snap.topping.conveyorLoad = 0.0f;
+            }
         }
 
         if (cmd.clearLogs)

@@ -43,6 +43,8 @@ public:
 
     ScenarioManager& getScenarioManager();
 
+    int getWipCount() const;
+
 private:
     ProductionLine line;
 

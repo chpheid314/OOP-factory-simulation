@@ -46,10 +46,15 @@ public:
             type = "[BREAK]";
             break;
 
+        case EventType::MACHINE_REPAIRED:
+            type = "[REPAIR]";
+            break;
+
         case EventType::PRODUCT_LOST:
             type = "[LOST]";
             break;
         }
+        
 
         logs.push_back(
             type + " " + event.message

@@ -7,6 +7,7 @@ enum class EventType {
     ERROR,
     PRODUCT_DONE,
     MACHINE_BREAKDOWN,
+    MACHINE_REPAIRED,
     PRODUCT_LOST
 };
 

@@ -123,3 +123,15 @@ int ProductionLine::consumeOverflowLostCount()
 
     return count;
 }
+
+int ProductionLine::getWipCount() const
+{
+    int count = 0;
+
+    for(const auto& machine : machines)
+    {
+        count += machine->getQueueSize();
+    }
+
+    return count;
+}

@@ -29,6 +29,8 @@ public:
 
     int consumeOverflowLostCount();
 
+    int getWipCount() const;
+
 private:
     std::vector<std::unique_ptr<Machine>> machines;
 

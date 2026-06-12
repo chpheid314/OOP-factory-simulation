@@ -3,11 +3,14 @@
 #include <cstdlib>
 
 #include "ProductionLine.h"
+#include "EventManager.h"
+#include "Event.h"
 
 RandomBreakScenario::RandomBreakScenario(
-    StatisticsManager* statistics
-)
-    : statistics(statistics)
+    StatisticsManager* statistics,
+    EventManager* eventBus
+) : statistics(statistics),
+      eventBus(eventBus)
 {
 }
 
@@ -22,12 +25,19 @@ void RandomBreakScenario::apply(
     {
         if(rand()%100<2)
         {
-            machine->breakMachine();
+                    if(machine->forceBreak())
+        {
+            statistics->addBreakdown();
 
-            if(statistics)
+            if(eventBus)
             {
-                statistics->addBreakdown();
+                eventBus->emit({
+                    EventType::MACHINE_BREAKDOWN,
+                    machine->getName() +
+                    " machine broke down (random)"
+                });
             }
+        }
         }
     }
 }

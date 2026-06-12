@@ -26,16 +26,23 @@ Machine::Machine(const std::string& name,
     hasFinishedProduct = false;
 }
 
-void Machine::update(
-    int tick
-)
+void Machine::update(int tick)
 {
     if (broken)
+    {
+        repairTimer++;
+
+        if(repairTimer >= 10)
+        {
+            forceRepair();
+            autoRepaired = true;
+        }
+
         return;
+    }
 
     machineState->update(*this, tick);
 }
-
 
 std::string Machine::getName() const {
 
@@ -115,7 +122,12 @@ void Machine::pushProduct(const Product& product) {
     queue.push(product);
 }
 
-void Machine::forceBreak() {
+bool Machine::forceBreak()
+{
+    if (broken)
+    {
+        return false;
+    }
 
     broken = true;
 
@@ -127,6 +139,8 @@ void Machine::forceBreak() {
 
     if (health < 10)
         health = 10;
+
+    return true;
 }
 
 void Machine::forceRepair() {
@@ -140,8 +154,6 @@ void Machine::forceRepair() {
     progress = 0;
 
     health = 100;
-
-    
 }
 
 bool Machine::hasOutputProduct() const {
@@ -207,4 +219,11 @@ bool Machine::hasQueue() const
 Product& Machine::currentProduct()
 {
     return queue.front();
+}
+
+bool Machine::consumeAutoRepairFlag()
+{
+    bool result = autoRepaired;
+    autoRepaired = false;
+    return result;
 }

@@ -15,6 +15,8 @@ struct MachineSnap {
     int queueDepth = 0;
     int outputCount = 0;
     float processTime = 0.0f;
+    float conveyorLoad = 0.0f;
+    bool finiteQueue = false;
 };
 
 struct FactorySnap {

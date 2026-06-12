@@ -104,14 +104,10 @@ void FactoryUI::DrawMachines(const FactorySnap& snap, FactoryCmd& cmd)
             ImGui::SameLine();
         }
     }
-
-    ImGui::Spacing();
-    ImGui::Text("Conveyor Load");
-    ImGui::ProgressBar(snap.conveyorLoad, ImVec2(400, 20));
 }; 
 
 void FactoryUI::DrawMachineCard(const MachineSnap& machine) {
-    ImGui::BeginChild(machine.name.c_str(), ImVec2(180, 170), true);
+    ImGui::BeginChild(machine.name.c_str(), ImVec2(180, 220), true);
 
     ImGui::Text("%s Machine", machine.name.c_str());
 
@@ -120,6 +116,29 @@ void FactoryUI::DrawMachineCard(const MachineSnap& machine) {
     ImVec4 color = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 
     const char* stateText = "UNKNOWN";
+
+    ImGui::Text("Progress");
+    ImGui::ProgressBar(machine.progress, ImVec2(140, 20));
+
+    if(machine.finiteQueue)
+    {
+        ImGui::Text("Conveyor Load (max: 10)");
+
+        ImGui::ProgressBar(
+            machine.conveyorLoad,
+            ImVec2(140, 20)
+        );
+    }
+    else
+    {
+        ImGui::Text("Conveyor Load (max: INF)");
+
+        ImGui::ProgressBar(
+            0.0f,
+            ImVec2(140, 20),
+            "N/A"
+        );
+    }
 
     switch (machine.state) {
     case MachineVisualState::IDLE:
@@ -207,6 +226,10 @@ void FactoryUI::DrawEventLog(const FactorySnap& snap, FactoryCmd& cmd) {
     for (const auto& log : snap.logs) {
         ImGui::Text("%s", log.c_str());
     }
+
+    ImGui::SetScrollY(
+        ImGui::GetScrollMaxY()
+    );
 
     ImGui::EndChild();
 }
