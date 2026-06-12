@@ -9,8 +9,6 @@ public:
     void Render(const FactorySnap& snap, FactoryCmd& cmd);
 
 private:
-    int selectedMachine = 0;
-
     void DrawControls(const FactorySnap& snap, FactoryCmd& cmd);
 
     void DrawMachines(const FactorySnap& snap, FactoryCmd& cmd);
