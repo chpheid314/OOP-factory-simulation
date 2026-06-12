@@ -34,7 +34,7 @@ public:
 private:
     std::vector<std::unique_ptr<Machine>> machines;
 
-    bool hasCompletedProduct;
+    bool hasCompletedProduct = false;
     Product completedProduct;
 
     bool overflowMode = false;

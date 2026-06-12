@@ -8,11 +8,15 @@ void BrokenState::update(
 {
     machine.repairTimer++;
 
-    if(machine.repairTimer>=5)
+    if(machine.repairTimer>=10)
     {
         machine.repairTimer=0;
 
         machine.broken=false;
+
+        machine.health = 100.0f;
+
+        machine.autoRepaired = true;
 
         machine.setIdle();
     }

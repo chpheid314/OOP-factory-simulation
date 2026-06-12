@@ -20258,3 +20258,223 @@
 [DONE] Product 168 completed! Quality: 75
 [DONE] Product 169 completed! Quality: 75
 [INFO] Factory paused
+[INFO] Factory started
+[DONE] Product 1 completed! Quality: 75
+[DONE] Product 2 completed! Quality: 75
+[DONE] Product 3 completed! Quality: 75
+[DONE] Product 4 completed! Quality: 75
+[DONE] Product 5 completed! Quality: 75
+[DONE] Product 6 completed! Quality: 75
+[BREAK] Cream Machine machine broke down (manual)
+[DONE] Product 7 completed! Quality: 75
+[DONE] Product 8 completed! Quality: 75
+[DONE] Product 9 completed! Quality: 75
+[DONE] Product 10 completed! Quality: 75
+[DONE] Product 11 completed! Quality: 75
+[DONE] Product 12 completed! Quality: 75
+[DONE] Product 13 completed! Quality: 75
+[DONE] Product 14 completed! Quality: 75
+[DONE] Product 15 completed! Quality: 75
+[DONE] Product 16 completed! Quality: 75
+[BREAK] Cream Machine machine broke down (manual)
+[DONE] Product 17 completed! Quality: 75
+[DONE] Product 18 completed! Quality: 75
+[DONE] Product 19 completed! Quality: 75
+[DONE] Product 20 completed! Quality: 75
+[DONE] Product 21 completed! Quality: 75
+[BREAK] Cream Machine machine broke down (manual)
+[DONE] Product 22 completed! Quality: 75
+[REPAIR] Cream Machine machine repaired (manual)
+[DONE] Product 23 completed! Quality: 75
+[DONE] Product 24 completed! Quality: 75
+[DONE] Product 25 completed! Quality: 75
+[DONE] Product 26 completed! Quality: 75
+[DONE] Product 27 completed! Quality: 75
+[DONE] Product 28 completed! Quality: 75
+[DONE] Product 29 completed! Quality: 75
+[BREAK] Topping Machine machine broke down (manual)
+[DONE] Product 30 completed! Quality: 75
+[DONE] Product 31 completed! Quality: 75
+[DONE] Product 32 completed! Quality: 75
+[DONE] Product 33 completed! Quality: 75
+[DONE] Product 34 completed! Quality: 75
+[DONE] Product 35 completed! Quality: 75
+[DONE] Product 36 completed! Quality: 75
+[INFO] Factory paused
+[INFO] Factory started
+[BREAK] Sheet Machine machine broke down (random)
+[BREAK] Topping Machine machine broke down (random)
+[DONE] Product 62 completed! Quality: 75
+[DONE] Product 63 completed! Quality: 75
+[DONE] Product 64 completed! Quality: 75
+[BREAK] Sheet Machine machine broke down (random)
+[DONE] Product 65 completed! Quality: 75
+[DONE] Product 66 completed! Quality: 75
+[BREAK] Sheet Machine machine broke down (random)
+[DONE] Product 67 completed! Quality: 75
+[DONE] Product 68 completed! Quality: 75
+[BREAK] Sheet Machine machine broke down (random)
+[DONE] Product 69 completed! Quality: 75
+[DONE] Product 70 completed! Quality: 75
+[DONE] Product 71 completed! Quality: 75
+[BREAK] Sheet Machine machine broke down (random)
+[DONE] Product 72 completed! Quality: 75
+[DONE] Product 73 completed! Quality: 75
+[BREAK] Topping Machine machine broke down (random)
+[DONE] Product 74 completed! Quality: 75
+[DONE] Product 75 completed! Quality: 75
+[DONE] Product 76 completed! Quality: 75
+[BREAK] Topping Machine machine broke down (random)
+[BREAK] Cream Machine machine broke down (random)
+[DONE] Product 77 completed! Quality: 75
+[DONE] Product 78 completed! Quality: 75
+[DONE] Product 79 completed! Quality: 75
+[BREAK] Cream Machine machine broke down (random)
+[DONE] Product 80 completed! Quality: 75
+[BREAK] Topping Machine machine broke down (random)
+[DONE] Product 81 completed! Quality: 75
+[DONE] Product 82 completed! Quality: 75
+[DONE] Product 83 completed! Quality: 75
+[BREAK] Sheet Machine machine broke down (random)
+[DONE] Product 84 completed! Quality: 75
+[DONE] Product 85 completed! Quality: 75
+[DONE] Product 86 completed! Quality: 75
+[DONE] Product 87 completed! Quality: 75
+[BREAK] Sheet Machine machine broke down (random)
+[BREAK] Cream Machine machine broke down (random)
+[DONE] Product 88 completed! Quality: 75
+[DONE] Product 89 completed! Quality: 75
+[REPAIR] Cream Machine machine repaired (manual)
+[DONE] Product 90 completed! Quality: 75
+[DONE] Product 91 completed! Quality: 75
+[BREAK] Topping Machine machine broke down (random)
+[BREAK] Cream Machine machine broke down (random)
+[DONE] Product 92 completed! Quality: 75
+[INFO] Factory started
+[BREAK] Sheet Machine machine broke down (random)
+[REPAIR] Sheet Machine machine repaired automatically
+[BREAK] Topping Machine machine broke down (random)
+[REPAIR] Topping Machine machine repaired automatically
+[DONE] Product 1 completed! Quality: 75
+[DONE] Product 2 completed! Quality: 75
+[DONE] Product 3 completed! Quality: 75
+[BREAK] Sheet Machine machine broke down (random)
+[DONE] Product 4 completed! Quality: 75
+[DONE] Product 5 completed! Quality: 75
+[REPAIR] Sheet Machine machine repaired automatically
+[BREAK] Sheet Machine machine broke down (random)
+[DONE] Product 6 completed! Quality: 75
+[REPAIR] Sheet Machine machine repaired automatically
+[DONE] Product 7 completed! Quality: 75
+[BREAK] Sheet Machine machine broke down (random)
+[DONE] Product 8 completed! Quality: 75
+[REPAIR] Sheet Machine machine repaired automatically
+[DONE] Product 9 completed! Quality: 75
+[DONE] Product 10 completed! Quality: 75
+[BREAK] Sheet Machine machine broke down (random)
+[DONE] Product 11 completed! Quality: 75
+[REPAIR] Sheet Machine machine repaired automatically
+[DONE] Product 12 completed! Quality: 75
+[BREAK] Topping Machine machine broke down (random)
+[REPAIR] Topping Machine machine repaired automatically
+[DONE] Product 13 completed! Quality: 75
+[DONE] Product 14 completed! Quality: 75
+[DONE] Product 15 completed! Quality: 75
+[BREAK] Topping Machine machine broke down (random)
+[REPAIR] Topping Machine machine repaired automatically
+[BREAK] Cream Machine machine broke down (random)
+[DONE] Product 16 completed! Quality: 75
+[DONE] Product 17 completed! Quality: 75
+[REPAIR] Cream Machine machine repaired automatically
+[DONE] Product 18 completed! Quality: 75
+[BREAK] Cream Machine machine broke down (random)
+[DONE] Product 19 completed! Quality: 75
+[BREAK] Topping Machine machine broke down (random)
+[REPAIR] Cream Machine machine repaired automatically
+[REPAIR] Topping Machine machine repaired automatically
+[DONE] Product 20 completed! Quality: 75
+[DONE] Product 21 completed! Quality: 75
+[DONE] Product 22 completed! Quality: 75
+[BREAK] Sheet Machine machine broke down (random)
+[DONE] Product 23 completed! Quality: 75
+[REPAIR] Sheet Machine machine repaired automatically
+[DONE] Product 24 completed! Quality: 75
+[INFO] Factory started
+[BREAK] Sheet Machine machine broke down (random)
+[REPAIR] Sheet Machine machine repaired automatically
+[BREAK] Topping Machine machine broke down (random)
+[REPAIR] Topping Machine machine repaired automatically
+[DONE] Product 1 completed! Quality: 75
+[DONE] Product 2 completed! Quality: 75
+[DONE] Product 3 completed! Quality: 75
+[BREAK] Sheet Machine machine broke down (random)
+[DONE] Product 4 completed! Quality: 75
+[DONE] Product 5 completed! Quality: 75
+[REPAIR] Sheet Machine machine repaired automatically
+[BREAK] Sheet Machine machine broke down (random)
+[DONE] Product 6 completed! Quality: 75
+[REPAIR] Sheet Machine machine repaired automatically
+[DONE] Product 7 completed! Quality: 75
+[BREAK] Sheet Machine machine broke down (random)
+[DONE] Product 8 completed! Quality: 75
+[REPAIR] Sheet Machine machine repaired automatically
+[DONE] Product 9 completed! Quality: 75
+[DONE] Product 10 completed! Quality: 75
+[BREAK] Sheet Machine machine broke down (random)
+[DONE] Product 11 completed! Quality: 75
+[REPAIR] Sheet Machine machine repaired automatically
+[DONE] Product 12 completed! Quality: 75
+[BREAK] Topping Machine machine broke down (random)
+[REPAIR] Topping Machine machine repaired automatically
+[DONE] Product 13 completed! Quality: 75
+[DONE] Product 14 completed! Quality: 75
+[DONE] Product 15 completed! Quality: 75
+[BREAK] Topping Machine machine broke down (random)
+[REPAIR] Topping Machine machine repaired automatically
+[BREAK] Cream Machine machine broke down (random)
+[DONE] Product 16 completed! Quality: 75
+[DONE] Product 17 completed! Quality: 75
+[REPAIR] Cream Machine machine repaired automatically
+[DONE] Product 18 completed! Quality: 75
+[BREAK] Cream Machine machine broke down (random)
+[DONE] Product 19 completed! Quality: 75
+[BREAK] Topping Machine machine broke down (random)
+[REPAIR] Cream Machine machine repaired automatically
+[INFO] Factory started
+[DONE] Product 47 completed! Quality: 75
+[DONE] Product 48 completed! Quality: 75
+[DONE] Product 49 completed! Quality: 75
+[DONE] Product 50 completed! Quality: 75
+[DONE] Product 51 completed! Quality: 75
+[DONE] Product 52 completed! Quality: 75
+[DONE] Product 53 completed! Quality: 75
+[DONE] Product 54 completed! Quality: 75
+[DONE] Product 55 completed! Quality: 75
+[DONE] Product 56 completed! Quality: 75
+[BREAK] Cream Machine machine broke down (manual)
+[DONE] Product 57 completed! Quality: 75
+[DONE] Product 58 completed! Quality: 75
+[REPAIR] Cream Machine machine repaired automatically
+[DONE] Product 59 completed! Quality: 75
+[DONE] Product 60 completed! Quality: 75
+[DONE] Product 61 completed! Quality: 75
+[DONE] Product 62 completed! Quality: 75
+[DONE] Product 63 completed! Quality: 75
+[DONE] Product 64 completed! Quality: 75
+[DONE] Product 65 completed! Quality: 75
+[INFO] Factory started
+[DONE] Product 1 completed! Quality: 75
+[DONE] Product 2 completed! Quality: 75
+[DONE] Product 3 completed! Quality: 75
+[DONE] Product 4 completed! Quality: 75
+[DONE] Product 5 completed! Quality: 75
+[DONE] Product 6 completed! Quality: 75
+[DONE] Product 7 completed! Quality: 75
+[DONE] Product 8 completed! Quality: 75
+[DONE] Product 9 completed! Quality: 75
+[DONE] Product 10 completed! Quality: 75
+[DONE] Product 11 completed! Quality: 75
+[DONE] Product 12 completed! Quality: 75
+[DONE] Product 13 completed! Quality: 75
+[DONE] Product 14 completed! Quality: 75
+[DONE] Product 15 completed! Quality: 75

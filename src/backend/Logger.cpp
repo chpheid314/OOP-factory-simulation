@@ -25,6 +25,7 @@ void Logger::onEvent(const Event& event) {
         case EventType::PRODUCT_DONE: typeStr = "[DONE]"; break;
         case EventType::MACHINE_BREAKDOWN: typeStr = "[BREAK]"; break;
         case EventType::PRODUCT_LOST: typeStr = "[LOST]"; break;
+        case EventType::MACHINE_REPAIRED: typeStr = "[REPAIR]"; break;
     }
 
     std::string out = typeStr + " " + event.message;
