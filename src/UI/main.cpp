@@ -72,9 +72,13 @@ int main(int argc, char* argv[])
 
     eventBus.subscribe(&Logger::getInstance());
 
-    UIEventListener uiListener;
+    UIEventListener uiListener(
+        snap.logs
+    );
 
-    eventBus.subscribe(&uiListener);
+    eventBus.subscribe(
+        &uiListener
+    );
 
     Factory factory(eventBus);
 
@@ -101,7 +105,7 @@ int main(int argc, char* argv[])
         // UI
         ui.Render(snap, cmd);
 
-        if (cmd.start) 
+        if (cmd.start)
         {
             factory.start();
             cmd.start = false;
@@ -123,20 +127,38 @@ int main(int argc, char* argv[])
 
         auto& scenarios = factory.getScenarioManager();
 
-        scenarios.setEnabled(
-            0,
-            cmd.scenario == ScenarioType::RANDOM_BREAKDOWNS
-        );
+        static ScenarioType previousScenario =
+            ScenarioType::NORMAL_FLOW;
 
-        scenarios.setEnabled(
-            1,
-            cmd.scenario == ScenarioType::BOTTLENECK
-        );
+        if(cmd.scenario != previousScenario)
+        {
+            scenarios.setEnabled(0, false);
+            scenarios.setEnabled(1, false);
+            scenarios.setEnabled(2, false);
 
-        scenarios.setEnabled(
-            2,
-            cmd.scenario == ScenarioType::OVERFLOW
-        );
+            switch(cmd.scenario)
+            {
+            case ScenarioType::NORMAL_FLOW:
+                break;
+
+            case ScenarioType::RANDOM_BREAKDOWNS:
+                scenarios.setEnabled(0, true);
+                break;
+
+            case ScenarioType::BOTTLENECK:
+                scenarios.setEnabled(1, true);
+                break;
+
+            case ScenarioType::OVERFLOW:
+                scenarios.setEnabled(2, true);
+                break;
+            }
+
+            factory.reset();
+
+            previousScenario =
+                cmd.scenario;
+        }
 
 
         auto& machines = factory.getMachines();
@@ -183,53 +205,53 @@ int main(int argc, char* argv[])
 // Machine Snapshot
 // =========================
 
-if (machines.size() >= 3)
-{
-    snap.sheet.name =
-        machines[0]->getName();
+        if (machines.size() >= 3)
+        {
+            snap.sheet.name =
+                machines[0]->getName();
 
-    snap.sheet.health =
-        machines[0]->getHealth();
+            snap.sheet.health =
+                machines[0]->getHealth();
 
-    snap.sheet.progress =
-        machines[0]->getProgress()/100.0f;
+            snap.sheet.progress =
+                machines[0]->getProgress()/100.0f;
 
-    snap.sheet.queueDepth =
-        machines[0]->getQueueSize();
+            snap.sheet.queueDepth =
+                machines[0]->getQueueSize();
 
-    snap.sheet.outputCount =
-        machines[0]->getOutputCount();
+            snap.sheet.outputCount =
+                machines[0]->getOutputCount();
 
-    snap.cream.name =
-        machines[1]->getName();
+            snap.cream.name =
+                machines[1]->getName();
 
-    snap.cream.health =
-        machines[1]->getHealth();
+            snap.cream.health =
+                machines[1]->getHealth();
 
-    snap.cream.progress =
-        machines[1]->getProgress() / 100.0f;
+            snap.cream.progress =
+                machines[1]->getProgress() / 100.0f;
 
-    snap.cream.queueDepth =
-        machines[1]->getQueueSize();
+            snap.cream.queueDepth =
+                machines[1]->getQueueSize();
 
-    snap.cream.outputCount =
-        machines[1]->getOutputCount();
+            snap.cream.outputCount =
+                machines[1]->getOutputCount();
 
-    snap.topping.name =
-        machines[2]->getName();
+            snap.topping.name =
+                machines[2]->getName();
 
-    snap.topping.health =
-        machines[2]->getHealth();
+            snap.topping.health =
+                machines[2]->getHealth();
 
-    snap.topping.progress =
-        machines[2]->getProgress() / 100.0f;
+            snap.topping.progress =
+                machines[2]->getProgress() / 100.0f;
 
-    snap.topping.queueDepth =
-        machines[2]->getQueueSize();
+            snap.topping.queueDepth =
+                machines[2]->getQueueSize();
 
-    snap.topping.outputCount =
-        machines[2]->getOutputCount();
-}
+            snap.topping.outputCount =
+                machines[2]->getOutputCount();
+        }
 
         if (cmd.clearLogs)
         {
@@ -251,6 +273,15 @@ if (machines.size() >= 3)
         );
 
         SDL_GL_SwapWindow(window);
+
+        int delay = 200 / cmd.speed;
+
+        if (delay < 10)
+        {
+            delay = 10;
+        }
+
+        SDL_Delay(delay);
     }
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL2_Shutdown();

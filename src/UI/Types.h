@@ -4,8 +4,8 @@
 
 enum class ScenarioType {
     NORMAL_FLOW,
-    BOTTLENECK,
     RANDOM_BREAKDOWNS,
+    BOTTLENECK,
     OVERFLOW
 };
 

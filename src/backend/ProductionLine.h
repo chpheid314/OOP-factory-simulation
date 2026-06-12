@@ -23,9 +23,19 @@ public:
 
     std::vector<std::unique_ptr<Machine>>& getMachines();
 
+    void setOverflowMode(
+        bool enabled
+    );
+
+    int consumeOverflowLostCount();
+
 private:
     std::vector<std::unique_ptr<Machine>> machines;
 
     bool hasCompletedProduct;
     Product completedProduct;
+
+    bool overflowMode = false;
+
+    int overflowLostCount = 0;
 };

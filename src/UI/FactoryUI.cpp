@@ -31,20 +31,29 @@ void FactoryUI::DrawControls(const FactorySnap& snap, FactoryCmd& cmd) {
     ImGui::Spacing();
     ImGui::SliderFloat("Speed", &cmd.speed, 1.0f,  5.0f, "%.1fx");
 
-    ImGui::Checkbox(
-        "Bottleneck",
-        &cmd.bottleneck
-    );
-
-    ImGui::Checkbox(
+    static const char* scenarios[] =
+    {
+        "Normal",
         "Random Breakdowns",
-        &cmd.randomBreakdowns
-    );
+        "Bottleneck",
+        "Overflow"
+    };
 
-    ImGui::Checkbox(
-        "Overflow",
-        &cmd.overflow
-    );
+    int selected =
+        static_cast<int>(cmd.scenario);
+
+    if(ImGui::Combo(
+        "Scenario",
+        &selected,
+        scenarios,
+        IM_ARRAYSIZE(scenarios)
+    ))
+    {
+        cmd.scenario =
+            static_cast<ScenarioType>(
+                selected
+            );
+    }
 
     const char* cakeItems[] {
         "MATCHA",

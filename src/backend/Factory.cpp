@@ -60,6 +60,18 @@ void Factory::update() {
         tick
     );
 
+    int overflowLost =
+        line.consumeOverflowLostCount();
+
+    for(
+        int i = 0;
+        i < overflowLost;
+        i++
+    )
+    {
+        statistics.addLost();
+    }
+
     if(line.hasFinishedProduct())
     {
         Product p= line.popFinishedProduct();
@@ -68,25 +80,17 @@ void Factory::update() {
         {
             statistics.addLost();
 
-            std::cout
-                << "Product "
-                << p.getId()
-                << " burned! Quality: "
-                << p.getQuality()
-                << std::endl;
-
-            // 수정 필요: eventBus.emit, 즉 여기도 UI 표출
+            eventBus.emit({
+                EventType::PRODUCT_LOST,
+                "Product " +
+                std::to_string(p.getId()) +
+                " burned! Quality: " +
+                std::to_string(p.getQuality())
+            });
         }
         else
         {
             statistics.addFinished();
-
-            std::cout
-                << "Product "
-                << p.getId()
-                << " completed! Quality: "
-                << p.getQuality()
-                << std::endl;
 
             eventBus.emit({
                 EventType::PRODUCT_DONE,
@@ -99,6 +103,8 @@ void Factory::update() {
 
 void Factory::reset()
 {
+    running = false;
+
     line.reset();
 
     tick = 0;

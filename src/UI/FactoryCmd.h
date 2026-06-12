@@ -11,8 +11,6 @@ struct FactoryCmd
     bool clearLogs = false;
     int selectedMachine = -1;
     float speed = 1.0f;
-    bool bottleneck = false;
-    bool randomBreakdowns = false;
-    bool overflow = false;
+    ScenarioType scenario = ScenarioType::NORMAL_FLOW;
     CakeType recipe = CakeType::MATCHA;
 };

@@ -1,22 +1,58 @@
 #pragma once
 
 #include "../backend/IEventListener.h"
-#include <iostream>
 
-class UIEventListener : public IEventListener {
+#include <vector>
+#include <string>
+
+class UIEventListener : public IEventListener
+{
+private:
+    std::vector<std::string>& logs;
+
 public:
-    void onEvent(const Event& event) override {
+    UIEventListener(
+        std::vector<std::string>& logs
+    )
+        : logs(logs)
+    {
+    }
+
+    void onEvent(
+        const Event& event
+    ) override
+    {
         std::string type;
 
-        switch (event.type) {
-            case EventType::INFO: type = "[UI INFO]"; break;
-            case EventType::WARNING: type = "[UI WARN]"; break;
-            case EventType::ERROR: type = "[UI ERROR]"; break;
-            case EventType::PRODUCT_DONE: type = "[UI DONE]"; break;
-            case EventType::MACHINE_BREAKDOWN: type = "[UI BREAK]"; break;
-            case EventType::PRODUCT_LOST: type = "[UI LOST]"; break;
+        switch (event.type)
+        {
+        case EventType::INFO:
+            type = "[INFO]";
+            break;
+
+        case EventType::WARNING:
+            type = "[WARN]";
+            break;
+
+        case EventType::ERROR:
+            type = "[ERROR]";
+            break;
+
+        case EventType::PRODUCT_DONE:
+            type = "[DONE]";
+            break;
+
+        case EventType::MACHINE_BREAKDOWN:
+            type = "[BREAK]";
+            break;
+
+        case EventType::PRODUCT_LOST:
+            type = "[LOST]";
+            break;
         }
 
-        std::cout << type << " " << event.message << std::endl;
+        logs.push_back(
+            type + " " + event.message
+        );
     }
 };

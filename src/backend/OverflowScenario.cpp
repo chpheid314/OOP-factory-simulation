@@ -6,19 +6,12 @@ void OverflowScenario::apply(
     ProductionLine& line
 )
 {
-    for(int i=0;i<3;i++)
-    {
-        Product p(
-            9999+i,
-            CakeType::CHOCOLATE
-        );
-
-        line.pushProduct(p);
-    }
+    line.setOverflowMode(true);
 }
 
 void OverflowScenario::reset(
     ProductionLine& line
 )
 {
+    line.setOverflowMode(false);
 }
