@@ -136,23 +136,11 @@ int main(int argc, char* argv[])
             scenarios.setEnabled(1, false);
             scenarios.setEnabled(2, false);
 
-            switch(cmd.scenario)
-            {
-            case ScenarioType::NORMAL_FLOW:
-                break;
+            for (int i = 0; i < 3; i++) scenarios.setEnabled(i, false);
 
-            case ScenarioType::RANDOM_BREAKDOWNS:
-                scenarios.setEnabled(0, true);
-                break;
-
-            case ScenarioType::BOTTLENECK:
-                scenarios.setEnabled(1, true);
-                break;
-
-            case ScenarioType::OVERFLOW:
-                scenarios.setEnabled(2, true);
-                break;
-            }
+            int idx = static_cast<int>(cmd.scenario) - 1;
+            if (idx >= 0 && idx < 3)
+                scenarios.setEnabled(idx, true);
 
             factory.reset();
 
@@ -234,98 +222,21 @@ int main(int argc, char* argv[])
 
         if (machines.size() >= 3)
         {
-            snap.sheet.name =
-                machines[0]->getName();
+            MachineSnap* snaps[] = { &snap.sheet, &snap.cream, &snap.topping };
 
-            snap.sheet.health =
-                machines[0]->getHealth()/100.0f;
+            for (int i = 0; i < 3; i++) {
+                snaps[i]->name     = machines[i]->getName();
+                snaps[i]->health   = machines[i]->getHealth() / 100.0f;
+                snaps[i]->progress = machines[i]->getProgress() / 100.0f;
+                snaps[i]->queueDepth   = machines[i]->getQueueSize();
+                snaps[i]->outputCount  = machines[i]->getOutputCount();
 
-            if (machines[0]->getState() == "BROKEN")
-            {
-                snap.sheet.state =
-                    MachineVisualState::BROKEN;
+                const std::string& state = machines[i]->getState();
+                if      (state == "BROKEN")  snaps[i]->state = MachineVisualState::BROKEN;
+                else if (state == "WORKING") snaps[i]->state = MachineVisualState::WORKING;
+                else                         snaps[i]->state = MachineVisualState::IDLE;
             }
-            else if (machines[0]->getState() == "WORKING")
-            {
-                snap.sheet.state =
-                    MachineVisualState::WORKING;
-            }
-            else
-            {
-                snap.sheet.state =
-                    MachineVisualState::IDLE;
-            }
-
-            snap.sheet.progress =
-                machines[0]->getProgress()/100.0f;
-
-            snap.sheet.queueDepth =
-                machines[0]->getQueueSize();
-
-            snap.sheet.outputCount =
-                machines[0]->getOutputCount();
-
-            snap.cream.name =
-                machines[1]->getName();
-
-            snap.cream.health =
-                machines[1]->getHealth() / 100.0f;
-
-            if (machines[1]->getState() == "BROKEN")
-            {
-                snap.cream.state =
-                    MachineVisualState::BROKEN;
-            }
-            else if (machines[1]->getState() == "WORKING")
-            {
-                snap.cream.state =
-                    MachineVisualState::WORKING;
-            }
-            else
-            {
-                snap.cream.state =
-                    MachineVisualState::IDLE;
-            }
-
-            snap.cream.progress =
-                machines[1]->getProgress() / 100.0f;
-
-            snap.cream.queueDepth =
-                machines[1]->getQueueSize();
-
-            snap.cream.outputCount =
-                machines[1]->getOutputCount();
-
-            snap.topping.name =
-                machines[2]->getName();
-
-            snap.topping.health =
-                machines[2]->getHealth() / 100.0f;
-
-            if (machines[2]->getState() == "BROKEN")
-            {
-                snap.topping.state =
-                    MachineVisualState::BROKEN;
-            }
-            else if (machines[2]->getState() == "WORKING")
-            {
-                snap.topping.state =
-                    MachineVisualState::WORKING;
-            }
-            else
-            {
-                snap.topping.state =
-                    MachineVisualState::IDLE;
-            }
-
-            snap.topping.progress =
-                machines[2]->getProgress() / 100.0f;
-
-            snap.topping.queueDepth =
-                machines[2]->getQueueSize();
-
-            snap.topping.outputCount =
-                machines[2]->getOutputCount();
+            
             bool overflowEnabled =
                 cmd.scenario ==
                 ScenarioType::OVERFLOW;
@@ -369,7 +280,9 @@ int main(int argc, char* argv[])
         // Render
         ImGui::Render();
 
-        glViewport(0, 0, 1280, 720);
+        int w, h;
+        SDL_GetWindowSize(window, &w, &h);
+        glViewport(0, 0, w, h);
         glClearColor(251/250.0f, 228/250.0f, 235/250.0f, 0.9f);
         glClear(GL_COLOR_BUFFER_BIT);
 

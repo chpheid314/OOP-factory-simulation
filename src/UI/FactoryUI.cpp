@@ -107,7 +107,7 @@ void FactoryUI::DrawMachines(const FactorySnap& snap, FactoryCmd& cmd)
 }; 
 
 void FactoryUI::DrawMachineCard(const MachineSnap& machine) {
-    ImGui::BeginChild(machine.name.c_str(), ImVec2(180, 220), true);
+    ImGui::BeginChild(machine.name.c_str(), ImVec2(180, 190), true);
 
     ImGui::Text("%s Machine", machine.name.c_str());
 
@@ -162,8 +162,6 @@ void FactoryUI::DrawMachineCard(const MachineSnap& machine) {
     ImGui::TextColored(color, "%s", stateText);
     ImGui::Text( "Health");
     ImGui::ProgressBar(machine.health, ImVec2(140, 20));
-    ImGui::Text("Progress");
-    ImGui::ProgressBar(machine.progress, ImVec2(140, 20));
     ImGui::EndChild();
 }
 
