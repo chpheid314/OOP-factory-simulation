@@ -3,7 +3,7 @@
 Product::Product()
     : productId(0),
       cakeType(CakeType::CHOCOLATE),
-      quality(0),
+      quality(50),
       burned(false),
       completed(false)
 {

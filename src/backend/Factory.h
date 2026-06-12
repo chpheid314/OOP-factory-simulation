@@ -23,8 +23,6 @@ public:
 
     bool isRunning() const;
 
-    void spawnProduct();
-
     void setRecipe(CakeType type);
 
     CakeType getRecipe() const;
@@ -61,4 +59,6 @@ private:
     ScenarioManager scenarioManager;
 
     EventManager& eventBus;
+
+    void spawnProduct();
 };

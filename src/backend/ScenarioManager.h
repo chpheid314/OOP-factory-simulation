@@ -32,8 +32,6 @@ public:
         bool enabled
     );
 
-    int getScenarioCount() const;
-
 private:
 
     std::vector<

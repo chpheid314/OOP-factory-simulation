@@ -23,8 +23,6 @@ public:
 
     virtual std::string getName() const;
 
-    std::string getStateString() const;
-
     std::string getState() const;
 
     int getQueueSize() const;
@@ -48,8 +46,6 @@ public:
 
     virtual void resetProcessingTime();
 
-    virtual void breakMachine();
-
     virtual bool isBroken() const;
 
     void setState(
@@ -71,6 +67,8 @@ public:
     friend class IdleState;
     friend class WorkingState;
     friend class BrokenState;
+
+    virtual std::string getDescription() const { return ""; }
 
 protected:
     std::string name;

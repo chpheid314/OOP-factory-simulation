@@ -28,19 +28,6 @@ Machine::Machine(const std::string& name,
 
 void Machine::update(int tick)
 {
-    if (broken)
-    {
-        repairTimer++;
-
-        if(repairTimer >= 10)
-        {
-            forceRepair();
-            autoRepaired = true;
-        }
-
-        return;
-    }
-
     machineState->update(*this, tick);
 }
 
@@ -56,7 +43,7 @@ std::string Machine::getInfo() const {
     float progressPercent =
         (processTime > 0) ? (float)progress / processTime * 100.0f : 0.0f;
 
-    ss << "[" << getStateString() << "] "
+    ss << "[" << getState() << "] "
        << name
        << " | Queue: "
        << queue.size()
@@ -75,12 +62,6 @@ std::string Machine::getInfo() const {
     }
 
     return ss.str();
-}
-
-std::string Machine::getStateString() const
-{
-    return machineState
-        ->getName();
 }
 
 std::string Machine::getState() const
@@ -135,7 +116,7 @@ bool Machine::forceBreak()
 
     setBroken();
 
-    health -= 30;
+    health = 70.0f;
 
     if (health < 10)
         health = 10;
@@ -153,7 +134,7 @@ void Machine::forceRepair() {
 
     progress = 0;
 
-    health = 100;
+    health = 100.0f;
 }
 
 bool Machine::hasOutputProduct() const {
@@ -178,11 +159,6 @@ void Machine::setProcessingTime(
 void Machine::resetProcessingTime()
 {
     processTime = defaultProcessTime;
-}
-
-void Machine::breakMachine()
-{
-    forceBreak();
 }
 
 void Machine::setState(
