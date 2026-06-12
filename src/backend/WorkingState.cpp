@@ -3,7 +3,7 @@
 
 void WorkingState::update(
     Machine& machine,
-    int
+    int tick
 )
 {
     machine.progress++;

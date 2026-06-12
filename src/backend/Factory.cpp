@@ -1,15 +1,21 @@
 #include "Factory.h"
-
-#include <iostream>
+#include "Event.h"
+#include "EventManager.h"
 
 #include "SheetMachine.h"
 #include "CreamMachine.h"
 #include "ToppingMachine.h"
+
 #include "RandomBreakScenario.h"
 #include "BottleneckScenario.h"
 #include "OverflowScenario.h"
 
-Factory::Factory() {
+#include "Product.h"
+
+#include <iostream>
+
+
+Factory::Factory(EventManager& bus) : eventBus(bus) {
 
     tick = 0;
 
@@ -21,7 +27,8 @@ Factory::Factory() {
 
     scenarioManager.addScenario(
         std::make_unique<RandomBreakScenario>(
-            &statistics
+            &statistics,
+            &eventBus
         )
     );
 
@@ -54,6 +61,30 @@ void Factory::update() {
         tick
     );
 
+    for(auto& machine : line.getMachines())
+    {
+        if(machine->consumeAutoRepairFlag())
+        {
+            eventBus.emit({
+                EventType::MACHINE_REPAIRED,
+                machine->getName()
+                + " machine repaired automatically"
+            });
+        }
+    }
+
+    int overflowLost =
+        line.consumeOverflowLostCount();
+
+    for(
+        int i = 0;
+        i < overflowLost;
+        i++
+    )
+    {
+        statistics.addLost();
+    }
+
     if(line.hasFinishedProduct())
     {
         Product p= line.popFinishedProduct();
@@ -62,29 +93,31 @@ void Factory::update() {
         {
             statistics.addLost();
 
-            std::cout
-                << "Product "
-                << p.getId()
-                << " burned! Quality: "
-                << p.getQuality()
-                << std::endl;
+            eventBus.emit({
+                EventType::PRODUCT_LOST,
+                "Product " +
+                std::to_string(p.getId()) +
+                " burned! Quality: " +
+                std::to_string(p.getQuality())
+            });
         }
         else
         {
             statistics.addFinished();
 
-            std::cout
-                << "Product "
-                << p.getId()
-                << " completed! Quality: "
-                << p.getQuality()
-                << std::endl;
+            eventBus.emit({
+                EventType::PRODUCT_DONE,
+                "Product " + std::to_string(p.getId()) +
+                " completed! Quality: " + std::to_string(p.getQuality())
+            });
         }
     }
 }
 
 void Factory::reset()
 {
+    running = false;
+
     line.reset();
 
     tick = 0;
@@ -97,16 +130,28 @@ void Factory::reset()
 void Factory::start() {
 
     running = true;
+
+      eventBus.emit({
+        EventType::INFO,
+        "Factory started"
+    });
 }
 
 void Factory::pause() {
 
     running = false;
+
+    eventBus.emit({
+        EventType::INFO,
+        "Factory paused"
+    });
 }
 
 bool Factory::isRunning() const {
 
     return running;
+
+    
 }
 
 void Factory::spawnProduct() {
@@ -159,4 +204,14 @@ ProductionLine& Factory::getProductionLine()
 void Factory::addBreakdown()
 {
     statistics.addBreakdown();
+}
+
+ScenarioManager& Factory::getScenarioManager()
+{
+    return scenarioManager;
+}
+
+int Factory::getWipCount() const
+{
+    return line.getWipCount();
 }

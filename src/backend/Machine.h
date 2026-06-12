@@ -35,7 +35,7 @@ public:
 
     void pushProduct(const Product& product);
 
-    void forceBreak();
+    bool forceBreak();
     void forceRepair();
 
     bool hasOutputProduct() const;
@@ -66,6 +66,8 @@ public:
 
     Product& currentProduct();
 
+    bool consumeAutoRepairFlag();
+
     friend class IdleState;
     friend class WorkingState;
     friend class BrokenState;
@@ -93,4 +95,6 @@ protected:
     int defaultProcessTime;
 
     bool broken=false;
+
+    bool autoRepaired = false;
 };

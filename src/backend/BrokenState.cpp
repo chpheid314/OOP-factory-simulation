@@ -3,7 +3,7 @@
 
 void BrokenState::update(
     Machine& machine,
-    int
+    int tick
 )
 {
     machine.repairTimer++;

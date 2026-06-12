@@ -3,7 +3,7 @@
 
 void IdleState::update(
     Machine& machine,
-    int
+    int tick
 )
 {
     if(machine.hasQueue())

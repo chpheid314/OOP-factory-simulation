@@ -5,6 +5,8 @@
 
 #include "Scenario.h"
 
+class ProductionLine;
+
 class ScenarioManager
 {
 public:

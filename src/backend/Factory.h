@@ -7,11 +7,12 @@
 #include "CakeType.h"
 #include "ProductionLine.h"
 #include "ScenarioManager.h"
+#include "EventManager.h"
 #include "StatisticsManager.h"
 
 class Factory {
 public:
-    Factory();
+    Factory(EventManager& bus);
 
     void update();
 
@@ -40,6 +41,10 @@ public:
 
     ProductionLine& getProductionLine();
 
+    ScenarioManager& getScenarioManager();
+
+    int getWipCount() const;
+
 private:
     ProductionLine line;
 
@@ -54,4 +59,6 @@ private:
     int nextProductId;
 
     ScenarioManager scenarioManager;
+
+    EventManager& eventBus;
 };

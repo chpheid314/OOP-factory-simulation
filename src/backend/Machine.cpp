@@ -26,15 +26,22 @@ Machine::Machine(const std::string& name,
     hasFinishedProduct = false;
 }
 
-void Machine::update(
-    int tick
-)
+void Machine::update(int tick)
 {
-    machineState
-        ->update(
-            *this,
-            tick
-        );
+    if (broken)
+    {
+        repairTimer++;
+
+        if(repairTimer >= 10)
+        {
+            forceRepair();
+            autoRepaired = true;
+        }
+
+        return;
+    }
+
+    machineState->update(*this, tick);
 }
 
 std::string Machine::getName() const {
@@ -47,7 +54,7 @@ std::string Machine::getInfo() const {
     std::stringstream ss;
 
     float progressPercent =
-        (float)progress / processTime * 100;
+        (processTime > 0) ? (float)progress / processTime * 100.0f : 0.0f;
 
     ss << "[" << getStateString() << "] "
        << name
@@ -99,8 +106,8 @@ float Machine::getHealth() const {
 
 float Machine::getProgress() const {
 
-    if (processTime == 0)
-        return 0;
+    if (processTime <= 0)
+        return 0.0f;
 
     return (float)progress / processTime * 100.0f;
 }
@@ -115,7 +122,12 @@ void Machine::pushProduct(const Product& product) {
     queue.push(product);
 }
 
-void Machine::forceBreak() {
+bool Machine::forceBreak()
+{
+    if (broken)
+    {
+        return false;
+    }
 
     broken = true;
 
@@ -127,6 +139,8 @@ void Machine::forceBreak() {
 
     if (health < 10)
         health = 10;
+
+    return true;
 }
 
 void Machine::forceRepair() {
@@ -205,4 +219,11 @@ bool Machine::hasQueue() const
 Product& Machine::currentProduct()
 {
     return queue.front();
+}
+
+bool Machine::consumeAutoRepairFlag()
+{
+    bool result = autoRepaired;
+    autoRepaired = false;
+    return result;
 }

@@ -26,6 +26,8 @@ void ProductionLine::reset()
     );
 
     hasCompletedProduct=false;
+
+    overflowLostCount = 0;
 }
 
 void ProductionLine::update(
@@ -49,8 +51,18 @@ void ProductionLine::update(
                 machines[i]
                 ->popOutputProduct();
 
-            machines[i+1]
-                ->pushProduct(p);
+            if(
+                overflowMode &&
+                machines[i+1]->getQueueSize() >= 10
+            )
+            {
+                overflowLostCount++;
+            }
+            else
+            {
+                machines[i+1]
+                    ->pushProduct(p);
+            }
         }
     }
 
@@ -94,4 +106,32 @@ std::vector<std::unique_ptr<Machine>>&
 ProductionLine::getMachines()
 {
     return machines;
+}
+
+void ProductionLine::setOverflowMode(
+    bool enabled
+)
+{
+    overflowMode = enabled;
+}
+
+int ProductionLine::consumeOverflowLostCount()
+{
+    int count = overflowLostCount;
+
+    overflowLostCount = 0;
+
+    return count;
+}
+
+int ProductionLine::getWipCount() const
+{
+    int count = 0;
+
+    for(const auto& machine : machines)
+    {
+        count += machine->getQueueSize();
+    }
+
+    return count;
 }
